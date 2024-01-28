@@ -2,13 +2,13 @@ from typing import Annotated, List
 
 from fastapi import APIRouter, BackgroundTasks, Body
 
-from .models.deribit import DeribitSubscribe, DeribitUpdate
-from .services.deribit import deribit_scraper, start, update
+from .models import DeribitSubscribe, DeribitUpdate
+from .service import deribit_scraper, start, update
 
 router = APIRouter()
 
 
-@router.post("/deribit/start")
+@router.post("/start")
 async def start_deribit(
     deribit_start: Annotated[
         DeribitSubscribe,
@@ -29,17 +29,17 @@ async def start_deribit(
     return "attempting to start"
 
 
-@router.post("/deribit/update")
+@router.post("/update")
 async def update_deribit(deribit_update: List[DeribitUpdate]):
     return update(deribit_scraper, deribit_update)
 
 
-@router.get("/deribit/stop")
+@router.get("/stop")
 async def stop_deribit():
     deribit_scraper.stop()
     return str(deribit_scraper.state)
 
 
-@router.get("/deribit/state")
+@router.get("/state")
 async def deribit_task_state():
     return str(deribit_scraper.state)

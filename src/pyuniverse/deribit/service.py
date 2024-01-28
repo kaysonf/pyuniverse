@@ -5,8 +5,9 @@ from typing import List
 import certifi
 import websockets
 
-from ..models.deribit import DeribitOperation, DeribitUpdate
-from ..models.ws_scraper import Error, Ready, Running, WsScraper
+from pyuniverse.common.ws_scraper import Error, Ready, Running, WsScraper
+
+from .models import DeribitOperation, DeribitUpdate
 
 
 def write_to_file(response):
