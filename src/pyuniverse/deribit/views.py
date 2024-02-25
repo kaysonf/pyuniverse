@@ -3,7 +3,7 @@ from typing import Annotated, List
 from fastapi import APIRouter, BackgroundTasks, Body
 
 from .models import DeribitSubscribe, DeribitUpdate
-from .service import deribit_scraper, start, update
+from .service import deribit_scraper, start, stop, update
 
 router = APIRouter()
 
@@ -31,12 +31,12 @@ async def start_deribit(
 
 @router.post("/update")
 async def update_deribit(deribit_update: List[DeribitUpdate]):
-    return update(deribit_scraper, deribit_update)
+    return await update(deribit_scraper, deribit_update)
 
 
 @router.get("/stop")
 async def stop_deribit():
-    deribit_scraper.stop()
+    await stop(deribit_scraper)
     return str(deribit_scraper.state)
 
 
